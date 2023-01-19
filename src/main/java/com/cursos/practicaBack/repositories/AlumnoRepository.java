@@ -6,5 +6,5 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
 public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
-
+    Alumno findById(long id);
 }
