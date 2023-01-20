@@ -15,16 +15,16 @@ public class Profesor {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     private String nombreProfesor, apellidoProfesor, nombreCurso;
-    @OneToOne
-    private Curso curso;
+
+    @OneToMany(mappedBy="profesor", fetch=FetchType.EAGER)
+    private Set<Curso> cursos = new HashSet<>();
 
     public Profesor() {
     }
 
-    public Profesor(String nombreProfesor, String apellidoProfesor, String nombreCurso) {
+    public Profesor(String nombreProfesor, String apellidoProfesor) {
         this.nombreProfesor = nombreProfesor;
         this.apellidoProfesor = apellidoProfesor;
-        this.nombreCurso = nombreCurso;
     }
 
     public Long getId() {
@@ -35,12 +35,12 @@ public class Profesor {
         return nombreProfesor;
     }
 
-    public Curso getCurso() {
-        return curso;
+    public Set<Curso> getCursos() {
+        return cursos;
     }
 
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setCursos(Set<Curso> cursos) {
+        this.cursos = cursos;
     }
 
     public void setNombreProfesor(String nombreProfesor) {

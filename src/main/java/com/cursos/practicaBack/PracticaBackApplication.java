@@ -32,21 +32,25 @@ public class PracticaBackApplication {
 			Alumno alumno3 = new Alumno("Marta", 28, LocalDate.of(1976,10,22),"secundario sin finalizar");
 			alumnoRepository.save(alumno3);
 
-			Profesor profesor1 = new Profesor("Pedro","Perez", "JAVA");
+			Profesor profesor1 = new Profesor("Pedro","Perez");
 			profesorRepository.save(profesor1);
-			Profesor profesor2 = new Profesor("Susana","Cabrera", "CSS");
+			Profesor profesor2 = new Profesor("Susana","Cabrera");
 			profesorRepository.save(profesor2);
-			Profesor profesor3 = new Profesor("John","Stone", "JAVASCRIPT");
+			Profesor profesor3 = new Profesor("John","Stone");
 			profesorRepository.save(profesor3);
+			Profesor profesor4 = new Profesor("lionel","messi");
+			profesorRepository.save(profesor4);
 
 			Curso curso1 = new Curso ("JAVA",profesor1, "tarde", "13hs", "Aprende con el mejor curso Java de cero con las mejores prácticas POO, Java EE 9, CDI, JPA, EJB, JSF, Web Services, JAAS");
 			cursoRepository.save(curso1);
 			Curso curso2 = new Curso ("CSS",profesor2, "mañana", "11hs", "Aprende CSS, sin conocimientos previos. Conoce todo sobre esta semántica, CSS, como dar estilos a tu sitio web.");
 			cursoRepository.save(curso2);
-			Curso curso3 = new Curso ("HTML",profesor2, "mañana", "09hs", "Aprende HTML5. Conoce todo acerca del lenguaje de marcado HTML, sin conocimientos previos, desde 0 y paso a paso.");
+			Curso curso3 = new Curso ("HTML",profesor3, "mañana", "09hs", "Aprende HTML5. Conoce todo acerca del lenguaje de marcado HTML, sin conocimientos previos, desde 0 y paso a paso.");
 			cursoRepository.save(curso3);
-			Curso curso4 = new Curso ("JavaScript",profesor2, "tarde", "16hs", "Dominá el lenguaje de la web de una manera simple y concisa para desarrollar y darle vida a la web que quieras.");
+			Curso curso4 = new Curso ("JavaScript",profesor4, "tarde", "16hs", "Dominá el lenguaje de la web de una manera simple y concisa para desarrollar y darle vida a la web que quieras.");
 			cursoRepository.save(curso4);
+//			Curso curso5 = new Curso ("C#", "tarde", "18hs", "Dominá el lenguaje de la web de una manera simple y concisa para desarrollar y darle vida a la web que quieras.");
+//			cursoRepository.save(curso5);
 
 			CursosAlumos cursoAlumno1 = new CursosAlumos(curso1, alumno1);
 			cursosAlumnosRepository.save(cursoAlumno1);

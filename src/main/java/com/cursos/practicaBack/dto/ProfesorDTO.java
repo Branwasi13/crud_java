@@ -1,12 +1,16 @@
 package com.cursos.practicaBack.dto;
 
+import com.cursos.practicaBack.models.Curso;
 import com.cursos.practicaBack.models.Profesor;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProfesorDTO {
     private Long id;
-    private String nombreProfesor, apellidoProfesor, nombreCurso;
-    private String pija;
+    private String nombreProfesor, apellidoProfesor;
 
+    private List<String> nombreCurso;
     public ProfesorDTO() {
     }
 
@@ -14,7 +18,7 @@ public class ProfesorDTO {
         this.id = profesor.getId();
         this.nombreProfesor = profesor.getNombreProfesor();
         this.apellidoProfesor = profesor.getApellidoProfesor();
-        this.nombreCurso = profesor.getNombreCurso();
+        this.nombreCurso = profesor.getCursos().stream().map(Curso::getNombre).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -29,7 +33,7 @@ public class ProfesorDTO {
         return apellidoProfesor;
     }
 
-    public String getNombreCurso() {
+    public List<String> getNombreCurso() {
         return nombreCurso;
     }
 }

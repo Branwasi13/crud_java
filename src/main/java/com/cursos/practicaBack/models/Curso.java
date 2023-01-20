@@ -13,11 +13,12 @@ public class Curso {
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     private String nombre, turno, horario, descripcion;
-    @OneToOne
-    private Profesor profesor;
     @OneToMany(mappedBy="curso", fetch=FetchType.EAGER)
     private Set<CursosAlumos> cursosAlumnos = new HashSet<>();
 
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name = "profesor_id")
+    private Profesor profesor;
     public Curso() {
     }
 
