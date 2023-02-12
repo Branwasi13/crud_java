@@ -7,6 +7,8 @@ import com.cursos.practicaBack.models.Profesor;
 import com.cursos.practicaBack.repositories.CursoRepository;
 import com.cursos.practicaBack.repositories.CursosAlumnosRepository;
 import com.cursos.practicaBack.repositories.ProfesorRepository;
+import com.cursos.practicaBack.services.interfaces.CursoAlumnosService;
+import com.cursos.practicaBack.services.interfaces.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,47 +22,42 @@ import java.util.stream.Collectors;
 public class CursoController {
 
     @Autowired
-    private CursoRepository cursoRepository;
+    private CursoService cursoService;
     @Autowired
-    private CursosAlumnosRepository cursosAlumnosRepository;
-
-    @Autowired
-    private ProfesorRepository profesorRepository;
+    private CursoAlumnosService cursoAlumnosService;
 
     @GetMapping("/api/cursos")
     public List<CursoDTO> getCursos(){
-        return cursoRepository.findAll().stream().map(CursoDTO::new).collect(Collectors.toList());
+        return cursoService.getCursos().stream().map(CursoDTO::new).collect(Collectors.toList());
     }
 
     @GetMapping("/api/cursos/{id}")
     public CursoDTO getCurso(@PathVariable long id){
-        return new CursoDTO(cursoRepository.findById(id));
+        return new CursoDTO(cursoService.getCursoById(id));
     }
 
     @PostMapping("/api/crearCurso")
     public ResponseEntity<Object> crearCurso(
-            @RequestParam String nombre, @RequestParam String turno, @RequestParam String horario, @RequestParam String descripcion, @RequestParam long id) {
+            @RequestParam String nombre, @RequestParam String turno, @RequestParam String horario, @RequestParam String descripcion) {
         if(nombre.isEmpty() || turno.isEmpty() || horario.isEmpty() || descripcion.isEmpty()){
             return new ResponseEntity<>("todos los campos tienen que estar llenos para crear un curso" ,HttpStatus.FORBIDDEN);
         }
-        Profesor profesor = profesorRepository.findById(id);
-        Curso curso = new Curso(nombre,profesor, turno , horario, descripcion);
-        cursoRepository.save(curso);
+        Curso curso = new Curso(nombre, turno , horario, descripcion);
+        cursoService.saveCurso(curso);
         return new ResponseEntity<>("curso creado", HttpStatus.OK);
     }
     @DeleteMapping("/api/eliminarCurso")
     public ResponseEntity<Object> eliminarCurso(@RequestParam long id){
-        Curso cursoAEliminar = cursoRepository.findById(id);
+        Curso cursoAEliminar = cursoService.getCursoById(id);
 
         if(cursoAEliminar.getCursosAlumnos().size() > 0){
             Set<Long> cursos = cursoAEliminar.getCursosAlumnos().stream().map(CursosAlumos::getId).collect(Collectors.toSet());
-
             for (Long cursoId:cursos){
-                cursosAlumnosRepository.deleteById(cursoId);
+                cursoAlumnosService.deleteCursoAlumnosById(cursoId);
             }
-            cursoRepository.deleteById(id);
+            cursoService.deleteCursoById(id);
         } else{
-            cursoRepository.deleteById(id);
+            cursoService.deleteCursoById(id);
         }
 
         return new ResponseEntity<>("Curso eliminado", HttpStatus.OK);

@@ -16,17 +16,15 @@ public class Curso {
     @OneToMany(mappedBy="curso", fetch=FetchType.EAGER)
     private Set<CursosAlumos> cursosAlumnos = new HashSet<>();
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name = "profesor_id")
-    private Profesor profesor;
+    @OneToMany(mappedBy="curso", fetch=FetchType.EAGER)
+    private Set<CursosProfesores> profesores = new HashSet<>();
     public Curso() {
     }
 
-    public Curso(String nombre,Profesor profesor, String turno, String horario, String descripcion) {
+    public Curso(String nombre, String turno, String horario, String descripcion) {
         this.nombre = nombre;
         this.turno = turno;
         this.horario = horario;
-        this.profesor = profesor;
         this.descripcion = descripcion;
     }
 
@@ -42,13 +40,12 @@ public class Curso {
         this.cursosAlumnos = cursosAlumnos;
     }
 
-
-    public Profesor getProfesor() {
-        return profesor;
+    public Set<CursosProfesores> getProfesores() {
+        return profesores;
     }
 
-    public void setProfesor(Profesor profesor) {
-        this.profesor = profesor;
+    public void setProfesores(Set<CursosProfesores> profesores) {
+        this.profesores = profesores;
     }
 
     public String getNombre() {

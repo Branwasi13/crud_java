@@ -1,16 +1,16 @@
 package com.cursos.practicaBack.dto;
 
-import com.cursos.practicaBack.models.Curso;
 import com.cursos.practicaBack.models.Profesor;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ProfesorDTO {
     private Long id;
     private String nombreProfesor, apellidoProfesor;
 
-    private List<String> nombreCurso;
+    private Set<ProfesoresCursosDTO> cursos = new HashSet<>();
     public ProfesorDTO() {
     }
 
@@ -18,7 +18,7 @@ public class ProfesorDTO {
         this.id = profesor.getId();
         this.nombreProfesor = profesor.getNombreProfesor();
         this.apellidoProfesor = profesor.getApellidoProfesor();
-        this.nombreCurso = profesor.getCursos().stream().map(Curso::getNombre).collect(Collectors.toList());
+        this.cursos = profesor.getCursos().stream().map(ProfesoresCursosDTO::new).collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -33,7 +33,7 @@ public class ProfesorDTO {
         return apellidoProfesor;
     }
 
-    public List<String> getNombreCurso() {
-        return nombreCurso;
+    public Set<ProfesoresCursosDTO> getCursos() {
+        return cursos;
     }
 }

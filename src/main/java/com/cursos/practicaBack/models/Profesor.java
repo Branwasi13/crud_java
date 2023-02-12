@@ -17,7 +17,7 @@ public class Profesor {
     private String nombreProfesor, apellidoProfesor, nombreCurso;
 
     @OneToMany(mappedBy="profesor", fetch=FetchType.EAGER)
-    private Set<Curso> cursos = new HashSet<>();
+    private Set<CursosProfesores> cursos = new HashSet<>();
 
     public Profesor() {
     }
@@ -35,11 +35,11 @@ public class Profesor {
         return nombreProfesor;
     }
 
-    public Set<Curso> getCursos() {
+    public Set<CursosProfesores> getCursos() {
         return cursos;
     }
 
-    public void setCursos(Set<Curso> cursos) {
+    public void setCursos(Set<CursosProfesores> cursos) {
         this.cursos = cursos;
     }
 

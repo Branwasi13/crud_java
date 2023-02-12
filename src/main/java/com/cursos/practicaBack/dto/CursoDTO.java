@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 
 public class CursoDTO {
     private Long id;
-    private String nombre, turno, horario, descripcion,profesor;
+    private String nombre, turno, horario, descripcion;
     private Set<CursosAlumnosDTO> cursosAlumnosDTOS = new HashSet<>();
+
+    private Set<CursosProfesoresDTO> cursosProfesoresDTOS = new HashSet<>();
 
     public CursoDTO() {
     }
@@ -23,8 +25,8 @@ public class CursoDTO {
         this.turno = curso.getTurno();
         this.horario = curso.getHorario();
         this.descripcion = curso.getDescripcion();
-        this.profesor = curso.getProfesor().getNombreProfesor() + " " + curso.getProfesor().getApellidoProfesor();
         this.cursosAlumnosDTOS = curso.getCursosAlumnos().stream().map(CursosAlumnosDTO::new).collect(Collectors.toSet());
+        this.cursosProfesoresDTOS = curso.getProfesores().stream().map(CursosProfesoresDTO::new).collect(Collectors.toSet());
     }
 
     public Long getId() {
@@ -51,7 +53,7 @@ public class CursoDTO {
         return cursosAlumnosDTOS;
     }
 
-    public String getProfesor() {
-        return profesor;
+    public Set<CursosProfesoresDTO> getCursosProfesoresDTOS() {
+        return cursosProfesoresDTOS;
     }
 }

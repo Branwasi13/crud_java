@@ -1,13 +1,7 @@
 package com.cursos.practicaBack;
 
-import com.cursos.practicaBack.models.Alumno;
-import com.cursos.practicaBack.models.Curso;
-import com.cursos.practicaBack.models.CursosAlumos;
-import com.cursos.practicaBack.models.Profesor;
-import com.cursos.practicaBack.repositories.AlumnoRepository;
-import com.cursos.practicaBack.repositories.CursoRepository;
-import com.cursos.practicaBack.repositories.CursosAlumnosRepository;
-import com.cursos.practicaBack.repositories.ProfesorRepository;
+import com.cursos.practicaBack.models.*;
+import com.cursos.practicaBack.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +17,7 @@ public class PracticaBackApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData (AlumnoRepository alumnoRepository, CursoRepository cursoRepository, ProfesorRepository profesorRepository, CursosAlumnosRepository cursosAlumnosRepository) {
+	public CommandLineRunner initData (AlumnoRepository alumnoRepository, CursoRepository cursoRepository, ProfesorRepository profesorRepository, CursosAlumnosRepository cursosAlumnosRepository, CursosProfesoresRepository cursosProfesoresRepository) {
 		return (args) -> {
 			Alumno alumno1 = new Alumno("julian", 35, LocalDate.of(1988,10,19),"secundario completo");
 			alumnoRepository.save(alumno1);
@@ -41,16 +35,24 @@ public class PracticaBackApplication {
 			Profesor profesor4 = new Profesor("lionel","messi");
 			profesorRepository.save(profesor4);
 
-			Curso curso1 = new Curso ("JAVA",profesor1, "tarde", "13hs", "Aprende con el mejor curso Java de cero con las mejores prácticas POO, Java EE 9, CDI, JPA, EJB, JSF, Web Services, JAAS");
+			Curso curso1 = new Curso ("JAVA", "tarde", "13hs", "Aprende con el mejor curso Java de cero con las mejores prácticas POO, Java EE 9, CDI, JPA, EJB, JSF, Web Services, JAAS");
 			cursoRepository.save(curso1);
-			Curso curso2 = new Curso ("CSS",profesor2, "mañana", "11hs", "Aprende CSS, sin conocimientos previos. Conoce todo sobre esta semántica, CSS, como dar estilos a tu sitio web.");
+			Curso curso2 = new Curso ("CSS", "mañana", "11hs", "Aprende CSS, sin conocimientos previos. Conoce todo sobre esta semántica, CSS, como dar estilos a tu sitio web.");
 			cursoRepository.save(curso2);
-			Curso curso3 = new Curso ("HTML",profesor3, "mañana", "09hs", "Aprende HTML5. Conoce todo acerca del lenguaje de marcado HTML, sin conocimientos previos, desde 0 y paso a paso.");
+			Curso curso3 = new Curso ("HTML", "mañana", "09hs", "Aprende HTML5. Conoce todo acerca del lenguaje de marcado HTML, sin conocimientos previos, desde 0 y paso a paso.");
 			cursoRepository.save(curso3);
-			Curso curso4 = new Curso ("JavaScript",profesor4, "tarde", "16hs", "Dominá el lenguaje de la web de una manera simple y concisa para desarrollar y darle vida a la web que quieras.");
+			Curso curso4 = new Curso ("JavaScript", "tarde", "16hs", "Dominá el lenguaje de la web de una manera simple y concisa para desarrollar y darle vida a la web que quieras.");
 			cursoRepository.save(curso4);
-//			Curso curso5 = new Curso ("C#", "tarde", "18hs", "Dominá el lenguaje de la web de una manera simple y concisa para desarrollar y darle vida a la web que quieras.");
-//			cursoRepository.save(curso5);
+
+			CursosProfesores cursosProfesores1 = new CursosProfesores(curso1, profesor1);
+			cursosProfesoresRepository.save(cursosProfesores1);
+			CursosProfesores cursosProfesores2 = new CursosProfesores(curso2, profesor2);
+			cursosProfesoresRepository.save(cursosProfesores2);
+			CursosProfesores cursosProfesores3 = new CursosProfesores(curso3, profesor3);
+			cursosProfesoresRepository.save(cursosProfesores3);
+			CursosProfesores cursosProfesores4 = new CursosProfesores(curso4, profesor4);
+			cursosProfesoresRepository.save(cursosProfesores4);
+
 
 			CursosAlumos cursoAlumno1 = new CursosAlumos(curso1, alumno1);
 			cursosAlumnosRepository.save(cursoAlumno1);

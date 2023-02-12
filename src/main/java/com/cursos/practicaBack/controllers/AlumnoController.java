@@ -5,6 +5,7 @@ import com.cursos.practicaBack.models.Alumno;
 import com.cursos.practicaBack.models.CursosAlumos;
 import com.cursos.practicaBack.repositories.CursosAlumnosRepository;
 import com.cursos.practicaBack.services.interfaces.AlumnoService;
+import com.cursos.practicaBack.services.interfaces.CursoProfesoresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class AlumnoController {
     @Autowired
     private AlumnoService alumnoService;
     @Autowired
-    private CursosAlumnosRepository cursosAlumnosRepository;
+    private CursoProfesoresService cursoProfesoresService;
 
     @GetMapping("/api/alumnos")
     public List<AlumnoDTO> alumnos(){
@@ -71,7 +72,7 @@ public class AlumnoController {
             Set<Long> alumnos = alumnoAEliminar.getCursosAlumnos().stream().map(CursosAlumos::getId).collect(Collectors.toSet());
 
             for (Long ids:alumnos){
-                cursosAlumnosRepository.deleteById(ids);
+                cursoProfesoresService.deleteCursoProfesoresById(ids);
             }
             alumnoService.deleteAlumno(alumnoAEliminar);
         }
